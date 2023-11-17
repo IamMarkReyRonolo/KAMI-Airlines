@@ -15,11 +15,15 @@ def add_airplane(request):
     serializer = AirplaneSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        message = {
+        response = {
             "message": "Successfully added airplane",
             "airplane": serializer.data,
+            "actions": {
+                "update": f"http://localhost:8000/api/airplanes/update/{serializer.data['id']}",
+                "delete": f"http://localhost:8000/api/airplanes/delete/{serializer.data['id']}",
+            },
         }
-        return Response(message, status=status.HTTP_201_CREATED)
+        return Response(response, status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -33,11 +37,11 @@ def bulk_add_airplanes(request):
     serializer = AirplaneSerializer(data=request.data, many=True)
     if serializer.is_valid():
         serializer.save()
-        message = {
+        response = {
             "message": "Successfully added airplanes",
             "airplanes": serializer.data,
         }
-        return Response(message, status=status.HTTP_201_CREATED)
+        return Response(response, status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -60,10 +64,17 @@ def get_airplane_by_id(request, id: int):
     try:
         airplane = Airplane.objects.get(pk=id)
         serializer = AirplaneSerializer(airplane)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        response = {
+            "airplane": serializer.data,
+            "actions": {
+                "update": f"http://localhost:8000/api/airplanes/update/{serializer.data['id']}",
+                "delete": f"http://localhost:8000/api/airplanes/delete/{serializer.data['id']}",
+            },
+        }
+        return Response(response, status=status.HTTP_200_OK)
     except Airplane.DoesNotExist:
-        message = {"message": "Airplane not found"}
-        return Response(message, status=status.HTTP_404_NOT_FOUND)
+        response = {"message": "Airplane not found"}
+        return Response(response, status=status.HTTP_404_NOT_FOUND)
 
 
 @swagger_auto_schema(method="PUT", request_body=AirplaneSerializer)
@@ -85,16 +96,20 @@ def update_airplane(request, id: int):
 
         if serializer.is_valid():
             serializer.save()
-            message = {
+            response = {
                 "message": "Successfully updated airplane",
                 "airplane": serializer.data,
+                "actions": {
+                    "fetch": f"http://localhost:8000/api/airplanes/{serializer.data['id']}",
+                    "delete": f"http://localhost:8000/api/airplanes/delete/{serializer.data['id']}",
+                },
             }
 
-            return Response(message)
+            return Response(response)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     except Airplane.DoesNotExist:
-        message = {"message": "Airplane not found"}
-        return Response(message, status=status.HTTP_404_NOT_FOUND)
+        response = {"message": "Airplane not found"}
+        return Response(response, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(["DELETE"])
@@ -105,11 +120,11 @@ def delete_airplane(request, id: int):
     try:
         airplane = Airplane.objects.get(pk=id)
         airplane.delete()
-        message = {"message": "Successfully deleted airplane"}
-        return Response(message, status=status.HTTP_200_OK)
+        response = {"message": "Successfully deleted airplane"}
+        return Response(response, status=status.HTTP_200_OK)
     except Airplane.DoesNotExist:
-        message = {"message": "Airplane not found"}
-        return Response(message, status=status.HTTP_404_NOT_FOUND)
+        response = {"message": "Airplane not found"}
+        return Response(response, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(["DELETE"])
@@ -123,8 +138,8 @@ def delete_all_airplane(request):
             {"message": "Database already empty"}, status=status.HTTP_200_OK
         )
     airplanes.delete()
-    message = {"message": "Successfully deleted all airplanes"}
-    return Response(message, status=status.HTTP_200_OK)
+    response = {"message": "Successfully deleted all airplanes"}
+    return Response(response, status=status.HTTP_200_OK)
 
 
 # Add rules and users
