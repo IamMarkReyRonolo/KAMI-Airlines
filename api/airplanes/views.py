@@ -1,13 +1,22 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import (
+    api_view,
+    permission_classes,
+    authentication_classes,
+)
 from rest_framework import status
 from .models import Airplane
 from .serializers import AirplaneSerializer
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from api.user_accounts.customauth import JWTAuthentication
 
 
 @swagger_auto_schema(method="POST", request_body=AirplaneSerializer)
 @api_view(["POST"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def add_airplane(request):
     """
     Add airplane
@@ -30,6 +39,8 @@ def add_airplane(request):
 
 @swagger_auto_schema(method="POST", request_body=AirplaneSerializer.many_init())
 @api_view(["POST"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def bulk_add_airplanes(request):
     """
     Add airplane in bulk
@@ -47,6 +58,8 @@ def bulk_add_airplanes(request):
 
 
 @api_view(["GET"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def get_all_airplanes(request):
     """
     Get all airplanes
@@ -57,6 +70,8 @@ def get_all_airplanes(request):
 
 
 @api_view(["GET"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def get_airplane_by_id(request, id: int):
     """
     Get airplane by id
@@ -79,6 +94,8 @@ def get_airplane_by_id(request, id: int):
 
 @swagger_auto_schema(method="PUT", request_body=AirplaneSerializer)
 @api_view(["PUT"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def update_airplane(request, id: int):
     """
     Update airplane
@@ -113,6 +130,8 @@ def update_airplane(request, id: int):
 
 
 @api_view(["DELETE"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def delete_airplane(request, id: int):
     """
     Delete airplane
@@ -128,6 +147,8 @@ def delete_airplane(request, id: int):
 
 
 @api_view(["DELETE"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 def delete_all_airplane(request):
     """
     Delete airplane

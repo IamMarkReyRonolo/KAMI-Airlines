@@ -24,6 +24,7 @@ urlpatterns = [
     path("", RedirectView.as_view(url="/api/docs/")),
     path("admin/", admin.site.urls),
     path("api/airplanes/", include("api.airplanes.urls")),
+    path("api/users/", include("api.user_accounts.urls")),
     path(
         "api/docs/",
         schema_view.with_ui("swagger", cache_timeout=0),
