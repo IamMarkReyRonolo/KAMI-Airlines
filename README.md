@@ -13,7 +13,11 @@ To set up and run the project, follow these steps:
     ```bash
     pip install -r requirements.txt
     ```
-3. Run the server using this following commands:
+3. Run the migrate command to automate creation of tables:
+    ```bash
+    python manage.py makemigrations
+    ```
+4. Run the server using this following commands:
     ```bash
     python manage.py runserver
     ```
@@ -34,6 +38,13 @@ To set up and run the project, follow these steps:
 -   GET hhttp://localhost:8000/users/register
 
 ![Swagger Documentation Users API](./assets/users_api.jpg)
+
+### How to use the access token to access airplanes api endpoint.
+
+-   create a user account and log in using the valid credentials
+-   copy the access_token from the response data
+-   click authorize at the top portion. And the value should be - "Bearer Your_Token"
+    ![Swagger Documentation Token Auth Demo](./assets//2023-11-21%2004-20-34.mp4)
 
 ### Airplanes API
 
