@@ -7,3 +7,4 @@ tzdata==2023.3
 drf-yasg
 djangorestframework_simplejwt
 python-dotenv
+coverage
