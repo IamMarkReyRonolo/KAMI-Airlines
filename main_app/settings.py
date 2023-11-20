@@ -138,9 +138,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "user_accounts.KAMIUser"
 
 # SECRET KEY
-load_dotenv()
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
-JWT_ALGORITHM = os.getenv("JWT_ALGORITHM")
+# This will be hidden in production
+JWT_SECRET_KEY = "3a2c3158a8a428c1a0c1998360f7e452"
+JWT_ALGORITHM = "HS256"
 
 SWAGGER_SETTINGS = {
     "SECURITY_DEFINITIONS": {
