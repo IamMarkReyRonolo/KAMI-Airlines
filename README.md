@@ -44,7 +44,7 @@ To set up and run the project, follow these steps:
 -   create a user account and log in using the valid credentials
 -   copy the access_token from the response data
 -   click authorize at the top portion. And the value should be - "Bearer Your_Token"
-    ![Swagger Documentation Token Auth Demo](./assets//2023-11-21%2004-20-34.mp4)
+    ![Swagger Documentation Token Auth Demo](<./assets/2023-11-21%2004-20-34(1).gif>)
 
 ### Airplanes API
 
