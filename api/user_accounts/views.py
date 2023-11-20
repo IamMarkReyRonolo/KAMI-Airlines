@@ -22,8 +22,8 @@ def register_user(request):
         kami_user = KAMIUser.objects.get(username=serializer.data["username"])
         kami_user.set_password(serializer.data["username"])
         kami_user.save()
-
-        return Response(serializer.data, status=201)
+        response = {"message": "Successfully added user", "user": serializer.data}
+        return Response(response, status=201)
     return Response(serializer.errors, status=400)
 
 
