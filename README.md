@@ -15,7 +15,7 @@ To set up and run the project, follow these steps:
     ```
 3. Run the migrate command to automate creation of tables:
     ```bash
-    python manage.py makemigrations
+    python manage.py migrate
     ```
 4. Run the server using this following commands:
     ```bash
